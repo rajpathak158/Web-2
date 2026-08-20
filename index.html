@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ASTRONIS-X</title>
+
+    <meta
+        name="description"
+        content="ASTRONIS-X — An interactive journey through the universe."
+    >
+
+    <link rel="stylesheet" href="./css/style.css">
+
+    <!-- Three.js -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+        }
+    }
+    </script>
+</head>
+
+<body>
+
+    <!-- 3D BACKGROUND -->
+    <canvas id="space"></canvas>
+
+    <!-- NAVIGATION -->
+    <header class="navbar">
+
+        <div class="logo">
+            ASTRONIS<span>®</span>
+        </div>
+
+        <nav>
+            <a href="#home">HOME</a>
+            <a href="#explore">EXPLORE</a>
+            <a href="#about">ABOUT</a>
+        </nav>
+
+        <button class="menu">
+            <span></span>
+            <span></span>
+        </button>
+
+    </header>
+
+
+    <!-- HERO -->
+    <main id="home">
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <p class="eyebrow">
+                    BEYOND THE KNOWN
+                </p>
+
+                <h1>
+                    EXPLORE<br>
+                    THE <span>UNKNOWN</span>
+                </h1>
+
+                <p class="hero-description">
+                    A cinematic journey through space,
+                    time and the infinite universe.
+                </p>
+
+                <button class="explore-button">
+                    <span>BEGIN JOURNEY</span>
+                    <b>↗</b>
+                </button>
+
+            </div>
+
+            <div class="scroll-indicator">
+                <span>SCROLL TO EXPLORE</span>
+                <div class="scroll-line"></div>
+            </div>
+
+        </section>
+
+
+        <!-- SECOND SECTION -->
+        <section id="explore" class="content-section">
+
+            <div class="section-number">
+                01
+            </div>
+
+            <div>
+                <p class="eyebrow">
+                    THE COSMOS
+                </p>
+
+                <h2>
+                    THERE IS<br>
+                    MORE OUT THERE.
+                </h2>
+
+                <p class="section-text">
+                    Billions of galaxies. Trillions of stars.
+                    Worlds beyond our imagination.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- THIRD SECTION -->
+        <section id="about" class="content-section second">
+
+            <div class="section-number">
+                02
+            </div>
+
+            <div>
+                <p class="eyebrow">
+                    ASTRONIS-X
+                </p>
+
+                <h2>
+                    THE JOURNEY<br>
+                    HAS JUST BEGUN.
+                </h2>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+
+    <script type="module" src="./js/main.js"></script>
+
+</body>
+</html>
