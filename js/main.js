@@ -1,285 +1,387 @@
-import * as THREE from "three";
+// =========================================
+// PEACH LAW
+// Main JavaScript
+// =========================================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    // =====================================
+    // GSAP SETUP
+    // =====================================
+
+    gsap.registerPlugin(ScrollTrigger);
 
 
-// ============================================
-// SETUP
-// ============================================
+    // =====================================
+    // LOADER
+    // =====================================
 
-const canvas = document.querySelector("#space");
+    const loader =
+        document.querySelector(".loader");
 
-const scene = new THREE.Scene();
-
-const camera = new THREE.PerspectiveCamera(
-    60,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    2000
-);
-
-camera.position.z = 12;
+    const loaderLine =
+        document.querySelector(".loader-line div");
 
 
-const renderer = new THREE.WebGLRenderer({
-    canvas,
-    antialias: true,
-    powerPreference: "high-performance"
-});
-
-renderer.setPixelRatio(
-    Math.min(window.devicePixelRatio, 1.5)
-);
-
-renderer.setSize(
-    window.innerWidth,
-    window.innerHeight
-);
+    const loaderTimeline =
+        gsap.timeline();
 
 
-// ============================================
-// STARS
-// ============================================
-
-const starCount = 3500;
-
-const starGeometry = new THREE.BufferGeometry();
-
-const starPositions = new Float32Array(
-    starCount * 3
-);
-
-for (let i = 0; i < starCount; i++) {
-
-    const i3 = i * 3;
-
-    starPositions[i3] =
-        (Math.random() - 0.5) * 900;
-
-    starPositions[i3 + 1] =
-        (Math.random() - 0.5) * 900;
-
-    starPositions[i3 + 2] =
-        (Math.random() - 0.5) * 900;
-}
-
-starGeometry.setAttribute(
-    "position",
-    new THREE.BufferAttribute(
-        starPositions,
-        3
-    )
-);
+    loaderTimeline
+        .to(loaderLine, {
+            width: "100%",
+            duration: 1.4,
+            ease: "power2.inOut"
+        })
+        .to(loader, {
+            opacity: 0,
+            duration: 0.7,
+            ease: "power2.out",
+            onComplete: () => {
+                loader.style.display = "none";
+            }
+        });
 
 
-const starMaterial =
-    new THREE.PointsMaterial({
+    // =====================================
+    // HERO INTRO
+    // =====================================
 
-        color: 0xffffff,
+    const heroTimeline =
+        gsap.timeline({
+            delay: 1.5
+        });
 
-        size: 0.7,
 
-        transparent: true,
+    heroTimeline
+        .from(".navbar", {
+            y: -30,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power3.out"
+        })
+        .from(".hero-kicker", {
+            y: 25,
+            opacity: 0,
+            duration: 0.7,
+            ease: "power3.out"
+        }, "-=0.4")
+        .from("h1", {
+            y: 70,
+            opacity: 0,
+            duration: 1.1,
+            ease: "power4.out"
+        }, "-=0.35")
+        .from(".hero-description", {
+            y: 25,
+            opacity: 0,
+            duration: 0.7
+        }, "-=0.55")
+        .from(".hero-actions", {
+            y: 20,
+            opacity: 0,
+            duration: 0.6
+        }, "-=0.4")
+        .from(".hero-bottom", {
+            opacity: 0,
+            duration: 0.6
+        }, "-=0.25");
 
-        opacity: 0.8
+
+    // =====================================
+    // HERO ORB MOVEMENT
+    // =====================================
+
+    gsap.to(".hero-orb", {
+        x: -60,
+        y: 30,
+        scale: 1.08,
+        duration: 7,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut"
     });
 
 
-const stars =
-    new THREE.Points(
-        starGeometry,
-        starMaterial
-    );
+    // =====================================
+    // HERO GRID
+    // =====================================
 
-scene.add(stars);
-
-
-// ============================================
-// GLOWING PLANET
-// ============================================
-
-const planetGeometry =
-    new THREE.SphereGeometry(
-        3.5,
-        64,
-        64
-    );
-
-
-const planetMaterial =
-    new THREE.MeshBasicMaterial({
-        color: 0x162033,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.12
+    gsap.to(".hero-grid", {
+        backgroundPosition: "0 90px",
+        duration: 8,
+        repeat: -1,
+        ease: "none"
     });
 
 
-const planet =
-    new THREE.Mesh(
-        planetGeometry,
-        planetMaterial
-    );
+    // =====================================
+    // NAVBAR ON SCROLL
+    // =====================================
 
-planet.position.set(
-    4,
-    0,
-    -3
-);
-
-scene.add(planet);
+    const navbar =
+        document.querySelector(".navbar");
 
 
-// ============================================
-// INNER CORE
-// ============================================
+    ScrollTrigger.create({
 
-const coreGeometry =
-    new THREE.SphereGeometry(
-        2.7,
-        48,
-        48
-    );
+        start: "top -80",
 
+        onUpdate: (self) => {
 
-const coreMaterial =
-    new THREE.MeshBasicMaterial({
-        color: 0x050505
+            if (self.scroll() > 80) {
+                navbar.classList.add("scrolled");
+            } else {
+                navbar.classList.remove("scrolled");
+            }
+
+        }
+
     });
 
 
-const core =
-    new THREE.Mesh(
-        coreGeometry,
-        coreMaterial
+    // =====================================
+    // INTRO ANIMATION
+    // =====================================
+
+    gsap.from(".intro .section-label", {
+
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+
+        scrollTrigger: {
+            trigger: ".intro",
+            start: "top 75%"
+        }
+
+    });
+
+
+    gsap.from(".intro h2", {
+
+        y: 80,
+        opacity: 0,
+        duration: 1.1,
+        ease: "power3.out",
+
+        scrollTrigger: {
+            trigger: ".intro",
+            start: "top 70%"
+        }
+
+    });
+
+
+    gsap.from(".intro-copy", {
+
+        y: 50,
+        opacity: 0,
+        duration: 0.9,
+        delay: 0.15,
+
+        scrollTrigger: {
+            trigger: ".intro",
+            start: "top 70%"
+        }
+
+    });
+
+
+    // =====================================
+    // PRACTICE CARDS
+    // =====================================
+
+    gsap.from(".practice-header", {
+
+        y: 60,
+        opacity: 0,
+        duration: 1,
+
+        scrollTrigger: {
+            trigger: ".practice",
+            start: "top 70%"
+        }
+
+    });
+
+
+    gsap.from(".practice-card", {
+
+        y: 45,
+        opacity: 0,
+
+        duration: 0.8,
+
+        stagger: 0.12,
+
+        ease: "power3.out",
+
+        scrollTrigger: {
+            trigger: ".practice-list",
+            start: "top 75%"
+        }
+
+    });
+
+
+    // =====================================
+    // APPROACH
+    // =====================================
+
+    gsap.from(".approach-heading", {
+
+        x: -80,
+        opacity: 0,
+        duration: 1,
+
+        scrollTrigger: {
+            trigger: ".approach",
+            start: "top 70%"
+        }
+
+    });
+
+
+    gsap.from(".approach-point", {
+
+        x: 60,
+        opacity: 0,
+
+        duration: 0.8,
+
+        stagger: 0.15,
+
+        ease: "power3.out",
+
+        scrollTrigger: {
+            trigger: ".approach-points",
+            start: "top 75%"
+        }
+
+    });
+
+
+    // =====================================
+    // CONTACT
+    // =====================================
+
+    gsap.from(".contact-content > *", {
+
+        y: 70,
+        opacity: 0,
+
+        duration: 0.9,
+
+        stagger: 0.15,
+
+        ease: "power3.out",
+
+        scrollTrigger: {
+            trigger: ".contact",
+            start: "top 75%"
+        }
+
+    });
+
+
+    // =====================================
+    // CONTACT GLOW
+    // =====================================
+
+    gsap.to(".contact-glow", {
+
+        scale: 1.3,
+        opacity: 0.8,
+
+        duration: 5,
+
+        repeat: -1,
+        yoyo: true,
+
+        ease: "sine.inOut"
+
+    });
+
+
+    // =====================================
+    // MOBILE MENU
+    // =====================================
+
+    const menu =
+        document.querySelector(".mobile-menu");
+
+    const mobileNav =
+        document.querySelector(".mobile-nav");
+
+
+    menu.addEventListener("click", () => {
+
+        mobileNav.classList.toggle("open");
+
+    });
+
+
+    document
+        .querySelectorAll(".mobile-nav a")
+        .forEach(link => {
+
+            link.addEventListener("click", () => {
+
+                mobileNav.classList.remove("open");
+
+            });
+
+        });
+
+
+    // =====================================
+    // BUTTON HOVER EFFECT
+    // =====================================
+
+    document
+        .querySelectorAll(
+            ".button, .contact-button, .nav-cta"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "mouseenter",
+                () => {
+
+                    gsap.to(button, {
+                        scale: 1.025,
+                        duration: 0.25
+                    });
+
+                }
+            );
+
+
+            button.addEventListener(
+                "mouseleave",
+                () => {
+
+                    gsap.to(button, {
+                        scale: 1,
+                        duration: 0.25
+                    });
+
+                }
+            );
+
+        });
+
+
+    // =====================================
+    // REFRESH SCROLLTRIGGER
+    // =====================================
+
+    window.addEventListener(
+        "load",
+        () => {
+            ScrollTrigger.refresh();
+        }
     );
 
-planet.add(core);
-
-
-// ============================================
-// MOUSE MOVEMENT
-// ============================================
-
-let mouseX = 0;
-let mouseY = 0;
-
-window.addEventListener(
-    "pointermove",
-    (event) => {
-
-        mouseX =
-            (event.clientX / window.innerWidth - 0.5);
-
-        mouseY =
-            (event.clientY / window.innerHeight - 0.5);
-
-    }
-);
-
-
-// ============================================
-// ANIMATION
-// ============================================
-
-const clock =
-    new THREE.Clock();
-
-
-function animate() {
-
-    requestAnimationFrame(animate);
-
-    const time =
-        clock.getElapsedTime();
-
-
-    // Stars slowly rotate
-    stars.rotation.y =
-        time * 0.006;
-
-    stars.rotation.x =
-        time * 0.002;
-
-
-    // Planet rotation
-    planet.rotation.y =
-        time * 0.12;
-
-    planet.rotation.x =
-        time * 0.03;
-
-
-    // Camera reacts to mouse
-    camera.position.x +=
-        (mouseX * 1.2 - camera.position.x) * 0.025;
-
-    camera.position.y +=
-        (-mouseY * 0.8 - camera.position.y) * 0.025;
-
-    camera.lookAt(0, 0, 0);
-
-
-    renderer.render(
-        scene,
-        camera
-    );
-}
-
-animate();
-
-
-// ============================================
-// RESIZE
-// ============================================
-
-window.addEventListener(
-    "resize",
-    () => {
-
-        camera.aspect =
-            window.innerWidth /
-            window.innerHeight;
-
-        camera.updateProjectionMatrix();
-
-        renderer.setSize(
-            window.innerWidth,
-            window.innerHeight
-        );
-
-        renderer.setPixelRatio(
-            Math.min(
-                window.devicePixelRatio,
-                1.5
-            )
-        );
-
-    }
-);
-
-
-// ============================================
-// GSAP INTRO
-// ============================================
-
-gsap.from(".logo", {
-    opacity: 0,
-    y: -20,
-    duration: 1.2,
-    ease: "power3.out"
-});
-
-gsap.from(".hero-content > *", {
-    opacity: 0,
-    y: 40,
-    duration: 1.2,
-    stagger: 0.12,
-    ease: "power3.out",
-    delay: 0.3
-});
-
-gsap.from(".scroll-indicator", {
-    opacity: 0,
-    y: 20,
-    duration: 1,
-    delay: 1.2
 });
