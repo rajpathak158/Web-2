@@ -1,0 +1,352 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #020204;
+    color: #ffffff;
+    font-family: "Inter", sans-serif;
+    overflow-x: hidden;
+}
+
+/* =========================
+   3D CANVAS
+========================= */
+
+#space {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: -2;
+}
+
+/* Dark overlay */
+
+body::after {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at center,
+            transparent 20%,
+            rgba(0, 0, 0, 0.55) 100%
+        );
+
+    z-index: -1;
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    padding: 28px 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    z-index: 100;
+}
+
+.logo {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 4px;
+}
+
+.logo span {
+    font-size: 8px;
+    vertical-align: top;
+    margin-left: 3px;
+}
+
+nav {
+    display: flex;
+    gap: 40px;
+}
+
+nav a {
+    color: rgba(255,255,255,0.65);
+
+    text-decoration: none;
+
+    font-size: 10px;
+    letter-spacing: 2px;
+
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: white;
+}
+
+.menu {
+    display: none;
+
+    width: 40px;
+    height: 40px;
+
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.3);
+
+    border-radius: 50%;
+}
+
+.menu span {
+    display: block;
+
+    width: 15px;
+    height: 1px;
+
+    background: white;
+
+    margin: 4px auto;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    min-height: 100vh;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 9%;
+}
+
+.hero-content {
+    max-width: 850px;
+}
+
+.eyebrow {
+    font-size: 10px;
+
+    letter-spacing: 5px;
+
+    color: rgba(255,255,255,0.55);
+
+    margin-bottom: 25px;
+}
+
+h1 {
+    font-size: clamp(55px, 9vw, 145px);
+
+    line-height: 0.88;
+
+    font-weight: 700;
+
+    letter-spacing: -7px;
+}
+
+h1 span {
+    color: transparent;
+
+    -webkit-text-stroke: 1px rgba(255,255,255,0.75);
+}
+
+.hero-description {
+    max-width: 380px;
+
+    margin-top: 35px;
+
+    color: rgba(255,255,255,0.55);
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.explore-button {
+    margin-top: 35px;
+
+    padding: 16px 22px;
+
+    border: 1px solid rgba(255,255,255,0.35);
+
+    background: rgba(255,255,255,0.05);
+
+    color: white;
+
+    border-radius: 50px;
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    cursor: pointer;
+
+    backdrop-filter: blur(10px);
+
+    transition:
+        transform 0.3s,
+        background 0.3s;
+}
+
+.explore-button:hover {
+    transform: translateY(-3px);
+
+    background: rgba(255,255,255,0.12);
+}
+
+.explore-button span {
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.explore-button b {
+    font-size: 16px;
+}
+
+
+/* =========================
+   SCROLL
+========================= */
+
+.scroll-indicator {
+    position: absolute;
+
+    bottom: 35px;
+    left: 9%;
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.scroll-indicator span {
+    font-size: 8px;
+
+    letter-spacing: 3px;
+
+    color: rgba(255,255,255,0.45);
+}
+
+.scroll-line {
+    width: 70px;
+    height: 1px;
+
+    background: rgba(255,255,255,0.4);
+}
+
+
+/* =========================
+   SECTIONS
+========================= */
+
+.content-section {
+    min-height: 100vh;
+
+    padding: 15vh 9%;
+
+    display: grid;
+
+    grid-template-columns: 1fr 3fr;
+
+    align-items: center;
+}
+
+.section-number {
+    font-size: 11px;
+
+    letter-spacing: 4px;
+
+    color: rgba(255,255,255,0.35);
+}
+
+h2 {
+    font-size: clamp(40px, 7vw, 100px);
+
+    line-height: 0.9;
+
+    letter-spacing: -4px;
+}
+
+.section-text {
+    margin-top: 30px;
+
+    max-width: 400px;
+
+    color: rgba(255,255,255,0.5);
+
+    line-height: 1.7;
+}
+
+.second {
+    justify-content: center;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    .navbar {
+        padding: 22px 20px;
+    }
+
+    nav {
+        display: none;
+    }
+
+    .menu {
+        display: block;
+    }
+
+    .hero {
+        padding: 0 7%;
+    }
+
+    h1 {
+        letter-spacing: -3px;
+    }
+
+    .content-section {
+        grid-template-columns: 1fr;
+
+        gap: 40px;
+
+        padding: 15vh 7%;
+    }
+
+    .section-number {
+        align-self: end;
+    }
+
+  }
